@@ -1,36 +1,67 @@
+const fs = require('fs')
 class ProductManager {
     //propiedades
     #products;
     static idProducts = 0;
-
+    #path;
     constructor() {
-        this.#products = [];
+        this.#path = './data/productos.json';
+        this.#products = this.#leerProductosInFile()
+    }
+    #leerProductosInFile() {
+        try {
+            if (fs.existsSync(this.#path)) {
+                const fileContent = fs.readFileSync(this.#path, 'utf-8');
+                if (fileContent.trim() !== '') {
+                    return JSON.parse(fileContent);
+                }
+            }
+            return [];
+        } catch (error) {
+            console.log(`ocurrió un error al leer el archivo: ${error}`);
+            return [];
+        }
     }
 
-    addProduct(title, description, price, code, stock, thumbnail) {
+
+    #asignarIdProducto() {
+        let id = 1;
+        if (this.#products.length !== 0) {
+            id = this.#products[this.#products.length - 1].id + 1;
+        }
+        return id;
+    }
+    #guardarArchivo() {
+        try {
+            fs.writeFileSync(this.#path, JSON.stringify(this.#products))
+        } catch (error) {
+            console.log(`ocurrio un error al guardar el archivo ${error}`)
+        }
+    }
+    addProduct(title, description, price, code, stock) {
         if (!title || !description || !price || !stock || !code) {
             return `Todos los campos son obligatorios (title, description, price, stock)`;
         }
-
+    
         const productoRepetido = this.#products.some(p => p.code === code);
-        
+    
         if (productoRepetido) {
             return `ERROR: Código repetido`;
         }
-
-        const id = ++ProductManager.idProducts;
+    
+        const id = this.#asignarIdProducto();
         const producto = {
             id: id,
             title: title,
             description: description,
             price: price,
             code: code,
-            stock: stock,
-            thumbnail: thumbnail
+            stock: stock
         };
         this.#products.push(producto);
+        this.#guardarArchivo();
+        return `Producto añadido con ID: ${id}`;
     }
-
     getProducts() {
         return this.#products;
     }
@@ -43,7 +74,30 @@ class ProductManager {
             return `No encontrado, ID no reconocido: ${id}`;
         }
     }
+    updateProduct(id, objetoUpdate){
+        let msg = ` prodcuto no existe ${id}`
+
+        const index= this.#products.findIndex(p=> p.id === id)
+
+        if(index !== -1){
+            const {id, ...rest}= objetoUpdate;
+            this.#products[index] = {...this.#products[index], ...rest};
+            this.#guardarArchivo()
+        }
+        return msg
+    }
+    deleteProduct(id) {
+        let msg = `el producto con ${id} no existe`
+        const index = this.#products.findIndex(p => p.id === id)
+        if (index !== -1) {
+           this.#products = this.#products.filter(p=> p.id !== id)
+           this.#guardarArchivo();
+           msg= `producto eliminado`
+        }
+        return msg;
+    }
 }
+
 
 module.exports = {
     ProductManager: ProductManager
