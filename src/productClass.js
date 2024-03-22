@@ -1,11 +1,11 @@
-const fs = require('fs')
+import fs from 'fs';
 class ProductManager {
     //propiedades
     #products;
     static idProducts = 0;
     #path;
     constructor() {
-        this.#path = './data/productos.json';
+        this.#path = './src/data/productos.json';
         this.#products = this.#leerProductosInFile()
     }
     #leerProductosInFile() {
@@ -42,13 +42,13 @@ class ProductManager {
         if (!title || !description || !price || !stock || !code) {
             return `Todos los campos son obligatorios (title, description, price, stock)`;
         }
-    
+
         const productoRepetido = this.#products.some(p => p.code === code);
-    
+
         if (productoRepetido) {
             return `ERROR: Código repetido`;
         }
-    
+
         const id = this.#asignarIdProducto();
         const producto = {
             id: id,
@@ -62,8 +62,14 @@ class ProductManager {
         this.#guardarArchivo();
         return `Producto añadido con ID: ${id}`;
     }
-    getProducts() {
-        return this.#products;
+    getProducts(limit = 0) {
+        limit = Number(limit)
+        if (limit > 0) {
+            return this.#products.slice(0, limit)
+        }
+        else {
+            return this.#products;
+        }
     }
 
     getProductsId(id) {
@@ -74,14 +80,14 @@ class ProductManager {
             return `No encontrado, ID no reconocido: ${id}`;
         }
     }
-    updateProduct(id, objetoUpdate){
+    updateProduct(id, objetoUpdate) {
         let msg = ` prodcuto no existe ${id}`
 
-        const index= this.#products.findIndex(p=> p.id === id)
+        const index = this.#products.findIndex(p => p.id === id)
 
-        if(index !== -1){
-            const {id, ...rest}= objetoUpdate;
-            this.#products[index] = {...this.#products[index], ...rest};
+        if (index !== -1) {
+            const { id, ...rest } = objetoUpdate;
+            this.#products[index] = { ...this.#products[index], ...rest };
             this.#guardarArchivo()
         }
         return msg
@@ -90,15 +96,13 @@ class ProductManager {
         let msg = `el producto con ${id} no existe`
         const index = this.#products.findIndex(p => p.id === id)
         if (index !== -1) {
-           this.#products = this.#products.filter(p=> p.id !== id)
-           this.#guardarArchivo();
-           msg= `producto eliminado`
+            this.#products = this.#products.filter(p => p.id !== id)
+            this.#guardarArchivo();
+            msg = `producto eliminado`
         }
         return msg;
     }
 }
 
 
-module.exports = {
-    ProductManager: ProductManager
-};
+export default ProductManager
