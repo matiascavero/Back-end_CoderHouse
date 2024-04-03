@@ -38,8 +38,8 @@ class ProductManager {
             console.log(`ocurrio un error al guardar el archivo ${error}`)
         }
     }
-    addProduct(title, description, price, code, stock) {
-        if (!title || !description || !price || !stock || !code) {
+    addProduct(title, description, price, code, stock, category) {
+        if (!title || !description || !price || !stock || !code || !category) {
             return `Todos los campos son obligatorios (title, description, price, stock)`;
         }
 
@@ -56,7 +56,9 @@ class ProductManager {
             description: description,
             price: price,
             code: code,
-            stock: stock
+            stock: stock,
+            status: true,
+            category: category
         };
         this.#products.push(producto);
         this.#guardarArchivo();
@@ -73,12 +75,15 @@ class ProductManager {
     }
 
     getProductsId(id) {
+        let status = false
+        let resp = `El producto con id ${id} no existe`
+
         const valor = this.#products.find(p => p.id === id);
         if (valor) {
-            return valor;
-        } else {
-            return `No encontrado, ID no reconocido: ${id}`;
-        }
+            status = true;
+            resp = valor
+        } 
+        return {status, resp}
     }
     updateProduct(id, objetoUpdate) {
         let msg = ` prodcuto no existe ${id}`
