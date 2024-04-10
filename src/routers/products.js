@@ -44,11 +44,24 @@ routeProducts.put('/:pid', (req, res)=>{
 
 })
 //DELETE
-routeProducts.delete('/:pid',(req, res)=>{
+routeProducts.delete('/:pid', async (req, res)=>{
     const { pid } = req.params;
     const id = Number(pid)
-    prod.deleteProduct(id)
-    res.send(`El elemento con el id ${id} se elimino correctamente`)
+    try {
+        const message = await prod.deleteProduct(id)
+        res.json({
+            status: 'success',
+            message: message,
+            data: { id }
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'error',
+            message: error.message,
+        });
+        
+    }
+   
 
 })
 

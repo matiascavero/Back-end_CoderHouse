@@ -25,7 +25,10 @@ class CartsManager {
             return [];
         }
     }
-
+    
+    getCarts(){
+        return this.#carts;
+    }
     #asignarIdCart() {
         let id = 1;
         if (this.#carts.length !== 0) {

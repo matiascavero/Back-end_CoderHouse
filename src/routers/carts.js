@@ -7,8 +7,16 @@ const c = new CartsManager()
 
 routeCarts.get('/:cid', (req, res) => {
     const { cid } = req.params;
-    const result = c.getCartId(Number(cid));
-    return res.json(result);
+    if(isNaN(cid)){
+       return res.send(`error el id tiene que ser de tipo numerico`)
+    }
+    else if(cid == ''){
+      return c.getCarts();
+    }
+   else{
+        const result = c.getCartId(Number(cid));
+        return res.json(result);
+   }
 });
 
 routeCarts.post('/', (req, res) => {

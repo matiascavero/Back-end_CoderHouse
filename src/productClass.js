@@ -74,11 +74,11 @@ class ProductManager {
         }
     }
 
-    getProductsId(id) {
+    async getProductsId(id) {
         let status = false
         let resp = `El producto con id ${id} no existe`
 
-        const valor = this.#products.find(p => p.id === id);
+        const valor =  this.#products.find(p => p.id === id);
         if (valor) {
             status = true;
             resp = valor
@@ -97,15 +97,15 @@ class ProductManager {
         }
         return msg
     }
-    deleteProduct(id) {
-        let msg = `el producto con ${id} no existe`
-        const index = this.#products.findIndex(p => p.id === id)
+     async deleteProduct (id) {
+      
+        const index =  this.#products.findIndex(p => p.id === id)
         if (index !== -1) {
             this.#products = this.#products.filter(p => p.id !== id)
             this.#guardarArchivo();
-            msg = `producto eliminado`
+            return  `producto eliminado`
         }
-        return msg;
+        throw new Error(`el producto con ${id} no existe`);
     }
 }
 
