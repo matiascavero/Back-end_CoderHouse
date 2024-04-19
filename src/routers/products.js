@@ -1,5 +1,5 @@
 import express from "express";
-import ProductManager from '../productClass.js'
+import ProductManager from '../dao/productClass.js'
 
 const routeProducts = express.Router();
 
@@ -32,7 +32,7 @@ routeProducts.post('/', async (req, res) => {
     res.status(200).send(`Producto agregado con exito`)
 })
 //PUT
-routeProducts.put('/:pid', (req, res)=>{
+routeProducts.put('/:pid', (req, res) => {
     const { pid } = req.params;
     const producto = req.body;
     const id = Number(pid)
@@ -44,7 +44,7 @@ routeProducts.put('/:pid', (req, res)=>{
 
 })
 //DELETE
-routeProducts.delete('/:pid', async (req, res)=>{
+routeProducts.delete('/:pid', async (req, res) => {
     const { pid } = req.params;
     const id = Number(pid)
     try {
@@ -59,9 +59,9 @@ routeProducts.delete('/:pid', async (req, res)=>{
             status: 'error',
             message: error.message,
         });
-        
+
     }
-   
+
 
 })
 

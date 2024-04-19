@@ -1,5 +1,5 @@
 import express from "express";
-import CartsManager from "../cartClass.js";
+import CartsManager from "../dao/cartClass.js";
 
 const routeCarts = express.Router();
 
@@ -7,16 +7,16 @@ const c = new CartsManager()
 
 routeCarts.get('/:cid', (req, res) => {
     const { cid } = req.params;
-    if(isNaN(cid)){
-       return res.send(`error el id tiene que ser de tipo numerico`)
+    if (isNaN(cid)) {
+        return res.send(`error el id tiene que ser de tipo numerico`)
     }
-    else if(cid == ''){
-      return c.getCarts();
+    else if (cid == '') {
+        return c.getCarts();
     }
-   else{
+    else {
         const result = c.getCartId(Number(cid));
         return res.json(result);
-   }
+    }
 });
 
 routeCarts.post('/', (req, res) => {

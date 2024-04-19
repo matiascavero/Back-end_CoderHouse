@@ -25,8 +25,8 @@ class CartsManager {
             return [];
         }
     }
-    
-    getCarts(){
+
+    getCarts() {
         return this.#carts;
     }
     #asignarIdCart() {

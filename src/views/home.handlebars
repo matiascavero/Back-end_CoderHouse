@@ -1,1 +1,13 @@
-<h2>hola gente</h2>
+<h2>Lista de productos</h2>
+<hr>
+<br>
+
+<ul>
+    {{#each productos}}
+        <li>
+            {{nombre}}
+            ${{price}}
+        </li>
+        <hr>
+    {{/each}}
+</ul>

@@ -1,1 +1,26 @@
-[{"id":1,"title":"Manzana","description":"La fruta mas comprada por los Argentinos","price":"500","code":"w123q","stock":"23","status":"true","category":"comida"},{"id":2,"title":"Manzana","description":"La fruta mas comprada por los Argentinos","price":"500","code":"w12a1","stock":"24","status":"true","category":"comida"}]
+[{
+    "id":1,
+    "nombre":"monitor asus",
+    "price": 500000,
+    "cod": "a231"
+  },{
+      "id":2,
+      "nombre":"Celular samsung",
+      "price": 350000,
+      "cod": "ks01"
+  },{
+      "id":3,
+      "nombre":"TV HD OLED",
+      "price": 876500,
+      "cod": "m1s0"
+  },{
+      "id":4,
+      "nombre":"Teclado LG A352",
+      "price": 230700,
+      "cod":   "0sl1"
+  },{
+      "id":5,
+      "nombre":"lavarropa ULTRA FAST",
+      "price": 1000000,
+      "cod": "4ksd"
+  } ]

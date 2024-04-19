@@ -1,0 +1,1 @@
+  // [{"id":1,"title":"Manzana","description":"La fruta mas comprada por los Argentinos","price":"500","code":"w123q","stock":"23","status":"true","category":"comida"},{"id":2,"title":"Manzana","description":"La fruta mas comprada por los Argentinos","price":"500","code":"w12a1","stock":"24","status":"true","category":"comida"}]
