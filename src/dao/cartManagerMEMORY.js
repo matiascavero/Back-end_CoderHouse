@@ -1,8 +1,8 @@
 import fs from 'fs';
-import ProductManager from './productClass.js';
 
 
-class CartsManager {
+
+class CartsManagerMEMORY {
     //propiedades
     #carts;
     static idProducts = 0;
@@ -90,4 +90,4 @@ class CartsManager {
 }
 
 
-export default CartsManager
+export default CartsManagerMEMORY

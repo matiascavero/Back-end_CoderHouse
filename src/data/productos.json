@@ -1,26 +1,26 @@
 [{
     "id":1,
-    "nombre":"monitor asus",
+    "name":"monitor asus",
     "price": 500000,
     "cod": "a231"
   },{
       "id":2,
-      "nombre":"Celular samsung",
+      "name":"Celular samsung",
       "price": 350000,
       "cod": "ks01"
   },{
       "id":3,
-      "nombre":"TV HD OLED",
+      "name":"TV HD OLED",
       "price": 876500,
       "cod": "m1s0"
   },{
       "id":4,
-      "nombre":"Teclado LG A352",
+      "name":"Teclado LG A352",
       "price": 230700,
       "cod":   "0sl1"
   },{
       "id":5,
-      "nombre":"lavarropa ULTRA FAST",
+      "name":"lavarropa ULTRA FAST",
       "price": 1000000,
       "cod": "4ksd"
   } ]

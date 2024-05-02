@@ -1,9 +1,9 @@
 import express from "express";
-import CartsManager from "../dao/cartClass.js";
+import CartsManagerMEMORY from "../dao/cartManagerMEMORY.js";
 
 const routeCarts = express.Router();
 
-const c = new CartsManager()
+const c = new CartsManagerMEMORY()
 
 routeCarts.get('/:cid', (req, res) => {
     const { cid } = req.params;

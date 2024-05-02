@@ -1,9 +1,9 @@
 import express from "express";
-import ProductManager from '../dao/productClass.js'
+import ProductManagerMEMORY from '../dao/productManagerMEMORY.js';
 
 const routeProducts = express.Router();
 
-const prod = new ProductManager();
+const prod = new ProductManagerMEMORY();
 
 //GET
 routeProducts.get('/', async (req, res) => {

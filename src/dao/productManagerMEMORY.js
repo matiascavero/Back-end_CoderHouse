@@ -1,5 +1,5 @@
 import fs from 'fs';
-class ProductManager {
+class ProductManagerMEMORY {
     //propiedades
     #products;
     static idProducts = 0;
@@ -110,4 +110,4 @@ class ProductManager {
 }
 
 
-export default ProductManager
+export default ProductManagerMEMORY
