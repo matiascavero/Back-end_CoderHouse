@@ -10,7 +10,9 @@ class ProductManagerMONGO {
      async createProd(producto){
       return await productosModelo.create(producto)
      }
-     
+     async deleteProd(id){
+      return await productosModelo.deleteOne({_id:id})
+  }
 }
 
 
