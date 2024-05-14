@@ -7,7 +7,7 @@ async create(usuario){
     return nuevoUsuario.toJSON()
 }
 async getBy(filtro={}){
-  return await usuarioModelo.findOne(filtro).lean
+  return await usuarioModelo.findOne(filtro).lean()
 }
 }
 
