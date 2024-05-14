@@ -1,27 +1,25 @@
 import { Router } from 'express'
-import ProductManagerMONGO from '../dao/productManagerMONGO.js';
+import auth from '../middleware/auth.js'
+
 const routerVistas = Router()
 
-const prodManager = new ProductManagerMONGO();
 
-routerVistas.get('/productos',  async(req, res) => {
-    let productos
-    try {
-        productos = await prodManager.getAll()
-    } catch (error) {
-        console.log(error)
-        res.setHeader('Content-Type', 'application/json')
-        return res.status(500).json(
-            {
-                error: 'Error inesperado en el servidor - Intente mas tarde'
-            }
-        )
 
-    }
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).render('home', { productos: productos });
+routerVistas.get('/', (req, res)=>{
+    res.status(200).render('home')
 })
 
+routerVistas.get('/registro', (req, res)=>{
+    res.status(200).render('registro')
+})
+
+routerVistas.get('/login', (req, res)=>{
+    res.status(200).render('login')
+})
+
+routerVistas.get('/perfil', auth, (req, res)=>{
+    res.status(200).render('perfil', {usuario: req.session.usuario})
+})
 
 
 
