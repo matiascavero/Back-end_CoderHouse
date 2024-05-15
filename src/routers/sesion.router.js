@@ -51,7 +51,7 @@ routeSesionRouter.post('/login', async (req,res)=>{
             return res.status(400).json({error:`Complete email, y password`})
         }
     }
-    let usuario = await usuariosManager.getBy({ email });
+    let usuario=await usuariosManager.getBy({email, password:generaHash(password)})
     console.log("Usuario encontrado en la base de datos:", usuario);
     
     if(!usuario){
