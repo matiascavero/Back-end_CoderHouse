@@ -28,11 +28,15 @@ routeProductsMongo.get('/', async (req, res) => {
 //POST
 routeProductsMongo.post('/', async (req, res) => {
     const producto = req.body;
-    if (!producto.title,  !producto.price, !producto.code, !producto.stock) {
+    if (!producto.title || !producto.price || !producto.code || !producto.stock) {
         return res.send(`Error todos los campos son obligatorios`)
     }
-    prod.createProd(producto)
-    res.status(200).send(`Producto agregado con exito`)
+    try {
+        await prod.createProd(producto)
+        res.status(200).send(`Producto agregado con exito`)
+    } catch (error) {
+        res.status(500).send(`Error al agregar el producto: ${error.message}`)
+    }
 })
 //DELETE
 routeProductsMongo.delete("/:id", async(req, res)=>{

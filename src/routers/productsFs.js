@@ -1,5 +1,5 @@
 import express from "express";
-import ProductManagerMEMORY from '../dao/productManagerMEMORY.js';
+import ProductManagerMEMORY from '../dao/productManagerFs.js';
 
 const routeProducts = express.Router();
 

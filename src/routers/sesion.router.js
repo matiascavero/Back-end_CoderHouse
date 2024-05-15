@@ -42,7 +42,7 @@ routeSesionRouter.post('/registro', async (req,res)=>{
 routeSesionRouter.post('/login', async (req,res)=>{
     let {email, password, web}=req.body
 
-    console.log(req.body)
+    
     if(!email || !password){
         if(web){
             return res.redirect(`/login?error=Complete email, y password`)
@@ -52,7 +52,7 @@ routeSesionRouter.post('/login', async (req,res)=>{
         }
     }
     let usuario=await usuariosManager.getBy({email, password:generaHash(password)})
-    console.log("Usuario encontrado en la base de datos:", usuario);
+   
     
     if(!usuario){
         if(web){
