@@ -33,8 +33,13 @@ routecartsMongo.post('/', async (req, res) => {
             return res.send(`Error: Todos los campos (id y cantidad) son obligatorios para cada producto`);
         }
     }
-    cart.createCart(carts)
-    res.status(200).send(`Producto agregado con exito`)
+    try {
+        cart.createCart(carts)
+        res.status(200).send(`Producto agregado con exito`)
+    } catch (error) {
+        res.status(500).send(`Error al agregar el producto: ${error.message}`)
+    }
+ 
 })
 
 export default routecartsMongo;
