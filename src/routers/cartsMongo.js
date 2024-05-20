@@ -30,7 +30,7 @@ routecartsMongo.post('/', async (req, res) => {
     const carts = req.body;
     for (const product of carts.products) {
         if (!product.id || !product.quantity) {
-            return res.send(`Error: Todos los campos (id y cantidad) son obligatorios para cada producto`);
+            return res.json(`Error: Todos los campos (id y cantidad) son obligatorios para cada producto`);
         }
     }
     try {

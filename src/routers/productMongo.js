@@ -1,6 +1,7 @@
 import express from "express";
 import ProductManagerMONGO from "../dao/productManagerMONGO.js";
 import { isValidObjectId } from "mongoose";
+import { productosModelo } from "../dao/models/productosModelo.js";
 const routeProductsMongo = express.Router();
 
 const prod = new ProductManagerMONGO();
@@ -22,20 +23,37 @@ routeProductsMongo.get('/', async (req, res) => {
     }
 
 })
+routeProductsMongo.get('/:pid', async (req, res) => {
+    const { pid } = req.params;
+    try {
+        const producto = await prod.getById(pid);
+        if (producto.error) {
+            return res.status(404).json(producto);
+        }
+        return res.json(producto);
+    } catch (error) {
+        console.log(error);
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(500).json({
+            error: "Error inesperado en el servidor",
+            detalle: `${error.message}`
+        });
+    }
+});
 
 //END GET
 
 //POST
 routeProductsMongo.post('/', async (req, res) => {
     const producto = req.body;
-    if (!producto.title || !producto.price || !producto.code || !producto.stock) {
-        return res.send(`Error todos los campos son obligatorios`)
+    if (!producto.title || !producto.price || !producto.cod || !producto.stock) {
+        return res.json(`Error todos los campos son obligatorios`)
     }
     try {
         await prod.createProd(producto)
-        res.status(200).send(`Producto agregado con exito`)
+        res.status(200).json(`Producto agregado con exito`)
     } catch (error) {
-        res.status(500).send(`Error al agregar el producto: ${error.message}`)
+        res.status(500).json(`Error al agregar el producto: ${error.message}`)
     }
 })
 //DELETE
@@ -67,4 +85,20 @@ routeProductsMongo.delete("/:id", async(req, res)=>{
     }
 
 })
+//end DELETE
+
+//PUT
+
+routeProductsMongo.put('/:id', async (req, res) => {
+    const productId = req.params.id;
+    const updateData = req.body; // Suponiendo que los datos a actualizar están en el cuerpo de la solicitud
+ 
+    try {
+       const updatedProduct = await prod.updateProd(productId, updateData); // Llama a tu función para actualizar el producto
+       res.json(updatedProduct);
+    } catch (error) {
+       console.error(error);
+       res.status(500).json({ error: 'Error al actualizar el producto' });
+    }
+ });
 export default routeProductsMongo;

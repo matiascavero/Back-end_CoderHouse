@@ -8,7 +8,7 @@ const c = new CartsManagerMEMORY()
 routeCarts.get('/:cid', (req, res) => {
     const { cid } = req.params;
     if (isNaN(cid)) {
-        return res.send(`error el id tiene que ser de tipo numerico`)
+        return res.json(`error el id tiene que ser de tipo numerico`)
     }
     else if (cid == '') {
         return c.getCarts();

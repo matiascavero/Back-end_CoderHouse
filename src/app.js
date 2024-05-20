@@ -10,10 +10,12 @@ import routeProductsMongo from './routers/productMongo.js'
 import routecartsMongo from './routers/cartsMongo.js';
 import sessions from "express-session"
 import routeSesionRouter from './routers/sesion.router.js';
+import FileStore from 'session-file-store';
 const app = express();
 const PORT = 3000;
 
 
+const fileStore= FileStore(sessions)
 
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars');
@@ -23,7 +25,10 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessions({
-    secret:"CoderCoder123", resave:true, saveUninitialized: true
+    secret:"CoderCoder123", resave:true, saveUninitialized: true,
+     store: new fileStore({
+        ttl:60*60, retries:0,path:'./src/sessions'
+    })
 }))
 //rutas
 const routeApi = express.Router();
