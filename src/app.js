@@ -11,6 +11,8 @@ import routecartsMongo from './routers/cartsMongo.js';
 import sessions from "express-session"
 import routeSesionRouter from './routers/sesion.router.js';
 import FileStore from 'session-file-store';
+import passport from 'passport';
+import { initPassport } from './config/passport.config.js';
 const app = express();
 const PORT = 3000;
 
@@ -30,6 +32,11 @@ app.use(sessions({
         ttl:60*60, retries:0,path:'./src/sessions'
     })
 }))
+
+initPassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 //rutas
 const routeApi = express.Router();
 app.use('/api', routeApi);
