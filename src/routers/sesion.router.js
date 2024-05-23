@@ -59,50 +59,66 @@ routeSesionRouter.post('/registro',passport.authenticate("registro", {failureRed
 routeSesionRouter.post('/login', 
     passport.authenticate('login', { failureRedirect: '/api/sessions/error' }), 
     async (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        return res.status(201).json({ mensaje: "Inicio de sesión OK" });
+        let { web } = req.body
+        const usuario = { ...req.user };
+        delete usuario.password;
+        req.session.usuario = usuario;
+        if(web){
+            res.redirect("/perfil")
+        }else{
+            res.setHeader('Content-Type','application/json');
+            return res.status(200).json({payload:"Login correcto", usuario});
+        }
+        // res.setHeader('Content-Type', 'application/json');
+        // return res.status(201).json({ mensaje: "Inicio de sesión OK" });
+        
     }
-        // let {email, password, web}=req.body
+//         let {email, password, web}=req.body
 
     
-    // if(!email || !password){
-    //     if(web){
-    //         return res.redirect(`/login?error=Complete email, y password`)
-    //     }else{
-    //         res.setHeader('Content-Type','application/json');
-    //         return res.status(400).json({error:`Complete email, y password`})
-    //     }
-    // }
-    // let usuario=await usuariosManager.getBy({email})
+//     if(!email || !password){
+//         if(web){
+//             return res.redirect(`/login?error=Complete email, y password`)
+//         }else{
+//             res.setHeader('Content-Type','application/json');
+//             return res.status(400).json({error:`Complete email, y password`})
+//         }
+//     }
+//     let usuario=await usuariosManager.getBy({email})
    
     
-    // if(!usuario){
-    //     if(web){
-    //         return res.redirect(`/login?error=Credenciales invalidas`)
-    //     }else{
-    //         res.setHeader('Content-Type','application/json');
-    //         return res.status(400).json({error:`Credenciales inválidas`})
-    //     }
-    // }
-    // if(validaPasword(password, usuario.password)){
-    //     if(web){
-    //         return res.redirect(`/login?error=Credenciales invalidas`)
-    //     }else{
-    //         res.setHeader('Content-Type','application/json');
-    //         return res.status(400).json({error:`Credenciales inválidas`})
-    //     }
-    // }
-    // usuario={...usuario}
-    // delete usuario.password
-    // req.session.usuario=usuario
+//     if(!usuario){
+//         if(web){
+//             return res.redirect(`/login?error=Credenciales invalidas`)
+//         }else{
+//             res.setHeader('Content-Type','application/json');
+//             return res.status(400).json({error:`Credenciales inválidas`})
+//         }
+//     }
+//     if(validaPasword(password, usuario.password)){
+//         if(web){
+//             return res.redirect(`/login?error=Credenciales invalidas`)
+//         }else{
+//             res.setHeader('Content-Type','application/json');
+//             return res.status(400).json({error:`Credenciales inválidas`})
+//         }
+//     }
+//     usuario={...usuario}
+//     delete usuario.password
+//     req.session.usuario=usuario
     
-    // if(web){
-    //     res.redirect("/perfil")
-    // }else{
-    //     res.setHeader('Content-Type','application/json');
-    //     return res.status(200).json({payload:"Login correcto", usuario});
-    // }
+    
 );
+
+routeSesionRouter.get('/github',passport.authenticate('github', {}),(req,res)=>{
+
+})
+routeSesionRouter.get('/callbackGithub',passport.authenticate('github', { failureRedirect: '/api/sessions/error' }),(req,res)=>{
+    req.session.usuario=req.user
+
+    res.setHeader('Content-Type','application/json');
+    return res.status(200).json({payload:req.user});
+})
 routeSesionRouter.get("/logout", (req, res)=>{
     req.session.destroy(e=>{
         if(e){

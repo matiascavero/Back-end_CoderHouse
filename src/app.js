@@ -27,10 +27,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessions({
-    secret:"CoderCoder123", resave:true, saveUninitialized: true,
-     store: new fileStore({
-        ttl:60*60, retries:0,path:'./src/sessions'
-    })
+    secret:"CoderCoder123", resave:true, saveUninitialized: true
 }))
 
 initPassport()
