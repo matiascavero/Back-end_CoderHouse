@@ -60,6 +60,7 @@ routeSesionRouter.post('/login',
     passport.authenticate('login', { failureRedirect: '/api/sessions/error' }), 
     async (req, res) => {
         let { web } = req.body
+        
         const usuario = { ...req.user };
         delete usuario.password;
         req.session.usuario = usuario;
@@ -109,6 +110,26 @@ routeSesionRouter.post('/login',
     
     
 );
+routeSesionRouter.get('/logout',  (req, res) => {
+   try {
+    req.session.destroy(e => {
+        if (e) {
+            console.log(`Error al destruir la sesión de ${username}`);
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(500).json({
+                error: 'Error inesperado en el servidor - Intente más tarde, o contacte a su administrador',
+                detalle: `${e.message}`
+            });
+        }
+    });
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(200).json({ payload: `Logout Exitoso de ${req.user}...!!!` });
+   } catch (error) {
+    res.setHeader('Content-Type', 'application/json');
+    return res.json({ payload: `error en el logout de ${req.user}...!!!` });
+   }
+});
+
 
 routeSesionRouter.get('/github',passport.authenticate('github', {}),(req,res)=>{
 
@@ -119,24 +140,5 @@ routeSesionRouter.get('/callbackGithub',passport.authenticate('github', { failur
     res.setHeader('Content-Type','application/json');
     return res.status(200).json({payload:req.user});
 })
-routeSesionRouter.get("/logout", (req, res)=>{
-    req.session.destroy(e=>{
-        if(e){
-            console.log(error);
-            res.setHeader('Content-Type','application/json');
-            return res.status(500).json(
-                {
-                    error:`Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
-                    detalle:`${error.message}`
-                }
-            )
-            
-        }
-    })
-
-    res.setHeader('Content-Type','application/json');
-    return res.status(200).json({payload:"Logout Exitoso...!!!"});
-})
-
 
 export default routeSesionRouter

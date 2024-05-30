@@ -17,7 +17,6 @@ const app = express();
 const PORT = 3000;
 
 
-const fileStore= FileStore(sessions)
 
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars');

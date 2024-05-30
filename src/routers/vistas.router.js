@@ -22,9 +22,7 @@ routerVistas.get('/perfil', auth, (req, res)=>{
     res.status(200).render('perfil', {usuario})
     
 })
-routerVistas.get('/logout', (req, res)=>{
-    res.status(200).render('logout')
-})
+
 
 
 
