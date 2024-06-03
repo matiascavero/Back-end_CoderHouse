@@ -19,8 +19,8 @@ export const initPassport = () => {
             },
             async (req, username, password, done) => {
                 try {
-                    let { nombre } = req.body
-                    if (!nombre) {
+                    let { first_name,last_name,age } = req.body
+                    if (!first_name, !last_name) {
                         return done(null, false)
                     }
 
@@ -29,8 +29,9 @@ export const initPassport = () => {
                         return done(null, false)
                     }
                     password = generaHash(password)
-
-                    let nuevoUsuario = await usuariosManager.create({ nombre, email: username, password, rol: "user" })
+                     
+                    let nuevoUsuario = await usuariosManager.create({ first_name,last_name, age, email: username, password, rol: "user" })
+                   
                     return done(null, nuevoUsuario)
 
 
