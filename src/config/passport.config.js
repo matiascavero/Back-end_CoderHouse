@@ -73,6 +73,39 @@ export const initPassport = () => {
             }
         )
     )
+
+    //delete
+    passport.use(
+        "delete",
+        new local.Strategy(
+            {
+                usernameField: "email"
+
+            },
+            async (username, password, done) => {
+              
+                try {
+                    const usuarioContraseña = await usuariosManager.getBy({email: username})
+                    
+                    if (!usuarioContraseña) {
+                        return done(null, false, { message: 'Credenciales inválidas' });
+                    }
+                          
+                    if (!validaPasword(password, usuarioContraseña.password)) {
+                        return done(null, false, { message: 'Credenciales inválidas' });
+                    }
+                     await usuariosManager.delete({email: username})
+                    
+                   
+
+                    return done(null, usuarioContraseña);
+                } catch (error) {
+                    return done(error);
+                }
+
+            }
+        )
+    )
    
     
     passport.use(

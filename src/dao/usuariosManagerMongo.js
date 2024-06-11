@@ -1,7 +1,7 @@
 import usuarioModelo from './models/usuarioModelo.js'
 
 class UsuariosManagerMongo{
-  
+   
   async getAll(){
     return await usuarioModelo.find().lean()
   }
@@ -12,8 +12,8 @@ async create(usuario){
 async getBy(filtro={}){
   return await usuarioModelo.findOne(filtro).lean()
 }
-async delete(id){
- let usuario = await usuarioModelo.deleteOne({ _id: id }) 
+async delete(filtro={}){
+ let usuario = await usuarioModelo.deleteOne(filtro).lean() 
  return `Usuario ${usuario} eliminado`
 }
 }

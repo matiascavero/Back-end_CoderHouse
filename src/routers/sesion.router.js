@@ -110,6 +110,32 @@ routeSesionRouter.post('/login',
     
     
 );
+//DELETE
+
+routeSesionRouter.post('/delete', 
+    passport.authenticate('delete', { failureRedirect: '/api/sessions/error' }), 
+    async (req, res) => {
+    const { usuario } = req.user;
+    
+    try {
+     req.session.destroy(e => {
+         if (e) {
+             console.log(`Error al destruir la sesión de ${usuarioConst}`);
+             res.setHeader('Content-Type', 'application/json');
+             return res.status(500).json({
+                 error: 'Error inesperado en el servidor - Intente más tarde, o contacte a su administrador',
+                 detalle: `${e.message}`
+             });
+         }
+     });
+     res.setHeader('Content-Type', 'application/json');
+     return res.redirect('/registro?mensaje=Cuenta%20eliminada%20exitosamente');
+    } catch (error) {
+     res.setHeader('Content-Type', 'application/json');
+     return res.json({ payload: `error al borrar la cuenta ${usuarioConst}...!!!` });
+    }
+ });
+ //LOGOUT
 routeSesionRouter.get('/logout',  (req, res) => {
    try {
     req.session.destroy(e => {

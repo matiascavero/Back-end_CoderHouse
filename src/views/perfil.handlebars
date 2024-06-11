@@ -14,4 +14,13 @@
 <p>Correo electrónico: <strong>{{usuario.email}}</strong></p>
 <p>Rol: <strong>{{usuario.rol}}</strong></p>
 <br><br>
+<h1>Borrar cuenta</h1>
+<form action="/api/sessions/delete" method="post">
+
+    <input type="email" name="email" placeholder="correo electrónico">
+    <input type="password" name="password" placeholder="contraseña">
+
+    <br><br>
+    <input type="submit" value="delete">
+</form>
 {{>menu}}

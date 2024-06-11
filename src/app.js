@@ -10,7 +10,7 @@ import routeProductsMongo from './routers/productMongo.js'
 import routecartsMongo from './routers/cartsMongo.js';
 import sessions from "express-session"
 import routeSesionRouter from './routers/sesion.router.js';
-import FileStore from 'session-file-store';
+
 import passport from 'passport';
 import { initPassport } from './config/passport.config.js';
 const app = express();
