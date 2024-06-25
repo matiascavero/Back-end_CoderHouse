@@ -12,12 +12,7 @@ class ProductoController{
         } catch (error) {
             console.log(error)
             res.setHeader('Content-Type', 'application/json')
-            return res.status(500).json(
-                {
-                    error:"error inesperado en el servidor",
-                    detalle:`${error.masage}`
-                }
-            )
+            return res.sta
         }
     
     }
