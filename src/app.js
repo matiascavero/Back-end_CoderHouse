@@ -10,13 +10,13 @@ import routeProductsMongo from './routers/productMongo.js'
 import routecartsMongo from './routers/cartsMongo.js';
 import sessions from "express-session"
 import routeSesionRouter from './routers/sesion.router.js';
-
+import methodOverride from 'method-override'
 import passport from 'passport';
 import { initPassport } from './config/passport.config.js';
 const app = express();
 const PORT = 3000;
 
-
+app.use(methodOverride('_method'));
 
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars');

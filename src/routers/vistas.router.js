@@ -17,6 +17,8 @@ routerVistas.get('/usuarios', auth, isAdmin , ViewsController.getUsuarios)
 
 routerVistas.get('/productos',isUser, ViewsController.getProductos)
 
+routerVistas.get('/productosadmin', isAdmin, ViewsController.getProductosAdmin)
+
 routerVistas.get('/perfil', auth, ViewsController.getPerfil)
 
 

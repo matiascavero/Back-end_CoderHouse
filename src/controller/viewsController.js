@@ -40,6 +40,15 @@ class ViewsController {
           console.error(masage.error)
         }
       }
+      //productosAdmin
+    static getProductosAdmin = async(req, res)=>{
+      try {
+        const prods = await productos.getAll()
+        res.status(200).render('productosAdmin', {prods})
+      } catch (error) {
+        console.error(masage.error)
+      }
+    }
     //perfil
     static getPerfil = (req, res)=>{
         const usuario =  req.session.usuario

@@ -52,10 +52,7 @@ class ProductoController{
 
      static deleteProd= async(req, res)=>{
         let {id}=req.params
-        if(!isValidObjectId(id)){
-            res.setHeader('Content-Type','application/json');
-            return res.status(400).json({error:`Ingrese un id valido de MongoDB como argumento para busqueda`})
-        }
+       
     
         try {
             let resultado=await prod.deleteProd(id)
