@@ -1,4 +1,9 @@
 <h1>lista de productos</h1>
+{{#if productoagregado}}
+
+<div id="swal-container" data-show-swal="true"></div>
+
+{{/if}}
 <ul>
     {{#each prods}}
      
@@ -27,3 +32,21 @@
     <input type="submit" value="Agregar">
 </form>
 
+ <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const swalContainer = document.getElementById('swal-container');
+            const showSwal = swalContainer.getAttribute('data-show-swal');
+
+            if (showSwal === 'true') {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Tu producto ha sido agregado',
+                    showConfirmButton: false,
+                    width:"300px",
+                    
+                    timer: 1500
+                });
+            }
+        });
+    </script>

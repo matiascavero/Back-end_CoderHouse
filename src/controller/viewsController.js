@@ -42,9 +42,11 @@ class ViewsController {
       }
       //productosAdmin
     static getProductosAdmin = async(req, res)=>{
+      const{ productoagregado } = req.query
+      
       try {
         const prods = await productos.getAll()
-        res.status(200).render('productosAdmin', {prods})
+        res.status(200).render('productosadmin', {prods,productoagregado})
       } catch (error) {
         console.error(masage.error)
       }
