@@ -4,8 +4,13 @@
      <li>
         {{title}}
         {{price}}
-        <button ><a src="http://localhost:3000/api/mongo/carts/{{_id}}">Agregar al carrito</a></button>
-     </li>
+        <form action="http://localhost:3000/api/mongo/carts/{{_id}}" method="POST">
+            <button type="submit">Agregar al carrito</button>
+        </form>     
+        </li>
 
     {{/each}}
 </ul>
+
+
+<a href="/carrito">Carrito</a>

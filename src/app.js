@@ -13,6 +13,7 @@ import routeSesionRouter from './routers/sesion.router.js';
 import methodOverride from 'method-override'
 import passport from 'passport';
 import { initPassport } from './config/passport.config.js';
+import routerTicket from './routers/ticketMongo.js';
 const app = express();
 const PORT = 3000;
 
@@ -45,6 +46,7 @@ routeApi.use('/sessions', routeSesionRouter)
 //mongo
 routeApi.use('/mongo/products', routeProductsMongo)
 routeApi.use('/mongo/carts', routecartsMongo);
+routeApi.use('/mongo/ticket', routerTicket)
 //localhost:3000/api/mongo/#
 
 

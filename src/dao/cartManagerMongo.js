@@ -10,10 +10,17 @@ class CartsManagerMONGO {
     }
 
     async createOrUpdateCart(cart) {
-        // Suponiendo que siempre estamos actualizando el primer carrito
         if (cart._id) {
-            return await cartsModelo.findByIdAndUpdate(cart._id, cart, { new: true });
+            // Actualiza el carrito existente
+            const existingCart = await cartsModelo.findById(cart._id);
+            if (existingCart) {
+                existingCart.products = cart.products;
+                existingCart.total = existingCart.products.reduce((sum, p) => sum + (p.price * p.quantity), 0);
+                return await existingCart.save();
+            }
         } else {
+            // Crea un nuevo carrito
+            cart.total = cart.products.reduce((sum, p) => sum + (p.price * p.quantity), 0);
             return await this.createCart(cart);
         }
     }

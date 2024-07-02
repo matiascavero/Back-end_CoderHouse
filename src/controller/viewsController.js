@@ -1,11 +1,10 @@
-
 import UsuariosManagerMongo from "../dao/usuariosManagerMongo.js"
 import ProductManagerMONGO from "../dao/productManagerMONGO.js"
-
+import CartsManagerMONGO from "../dao/cartManagerMongo.js";
 
 const usuarioMan = new UsuariosManagerMongo();
 const productos = new ProductManagerMONGO()
-
+const carrito = new CartsManagerMONGO()
 class ViewsController {
     //home
     static getHome = (req, res) => {
@@ -56,6 +55,12 @@ class ViewsController {
         const usuario =  req.session.usuario
         res.status(200).render('perfil', {usuario})
         
+    }
+    //carrito
+    static getCarrito = async (req,res) =>{
+     const carritos = await carrito.getAll()
+    
+     res.status(200).render('carrito', {carritos})
     }
 }
 

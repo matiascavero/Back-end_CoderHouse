@@ -1,0 +1,18 @@
+<h1>CARRITO</h1>
+{{#each carritos}}
+<h2>Id del carrito: {{_id}}</h2>
+<h2>TOTAL: ${{total}}</h2>
+{{#each products}}
+<ul style="font-size: 1.2em;">
+   <li> id del producto: {{id}}</li>
+   <li>Cantidad: {{quantity}}</li>
+   <li>Precio por unidad: ${{price}}</li>
+</ul>
+{{/each}}
+{{/each}}
+
+<h3>Finalizar compra</h3>
+
+<form action="http://localhost:3000/api/mongo/ticket" method="POST">
+<button type="submit">Comprar</button>
+</form>

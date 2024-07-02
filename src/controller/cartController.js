@@ -1,42 +1,50 @@
 import CartsManagerMONGO from "../dao/cartManagerMongo.js";
-
+import ProductManagerMONGO from '../dao/productManagerMONGO.js'
 const cartsManager = new CartsManagerMONGO();
+const producto = new ProductManagerMONGO()
+class CartController {
 
-const CartController = {
-    async getAll(req, res) {
+    static getAll = async(req, res) => {
         try {
             const carts = await cartsManager.getAll();
             res.json(carts);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    },
-
-    async metPost(req, res) {
-        const { productId } = req.body;
-
+    }
+  
+    static metPost= async(req, res) =>{
+        const { productId } = req.params;
+        const {email} = req.user
+        
         try {
-            let carts = await cartsManager.getAll(); // Obtener todos los carritos
-            let cart = carts[0]; // Suponiendo que solo hay un carrito por ahora
-
+            const prod = await producto.getById(productId);
+            let carts = await cartsManager.getAll();
+            let cart = carts[0];
+  
             if (!cart) {
-                cart = { products: [] };
+              cart = { products: [], email };
+            } else if (!Array.isArray(cart.products)) {
+              cart.products = [];
             }
-
-            const productIndex = cart.products.findIndex(p => p.id === productId);
-
+  
+            const productIndex = cart.products.findIndex(p => p.id.equals(productId));
+            let price = prod.price;
+  
             if (productIndex !== -1) {
                 cart.products[productIndex].quantity += 1;
+                cart.products[productIndex].price = price;
             } else {
-                cart.products.push({ id: productId, quantity: 1 });
+                cart.products.push({ id: productId, quantity: 1, price});
             }
-
-            await cartsManager.createOrUpdateCart(cart); // Guardar el carrito actualizado
-            res.json({ message: 'Producto agregado al carrito' });
+  
+            await cartsManager.createOrUpdateCart(cart);
+            res.redirect('/productos');
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
-};
-
-export default CartController;
+  };
+  
+  export default CartController;
+  

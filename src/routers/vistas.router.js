@@ -21,6 +21,7 @@ routerVistas.get('/productosadmin', isAdmin, ViewsController.getProductosAdmin)
 
 routerVistas.get('/perfil', auth, ViewsController.getPerfil)
 
+routerVistas.get('/carrito',isUser, ViewsController.getCarrito)
 
 
 

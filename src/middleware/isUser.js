@@ -3,7 +3,7 @@ const isUser = (req, res, next)=>{
         next()
     }
     else{
-        res.status(403).send('no tienes el rol de user')
+        res.status(403).redirect('/login')
     }
 }
 

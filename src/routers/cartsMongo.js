@@ -10,6 +10,6 @@ routecartsMongo.get('/', CartController.getAll)
 //END GET
 
 //POST
-routecartsMongo.post('/', CartController.metPost)
+routecartsMongo.post('/:productId', CartController.metPost)
 
 export default routecartsMongo;
