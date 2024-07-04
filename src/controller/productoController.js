@@ -88,6 +88,16 @@ class ProductoController{
            res.status(500).json({ error: 'Error al actualizar el producto' });
         }
      }
+
+     static faker = async(req,res)=>{
+        try {
+            const fakerproducts = await prod.fakerProds()
+            res.status(200).json(fakerproducts)
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al generar los productos fakerController' });
+        }
+     }
 }
 
 
