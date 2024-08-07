@@ -3,10 +3,19 @@ import TicketManagerMongo from "../dao/ticketManagerMongo.js";
 
 const carrito = new CartsManagerMONGO()
 const ticketMongo = new TicketManagerMongo()
+const cart = await carrito.getAll()
 class TicketController {
+    
+    // static ticketGet = async(req,res)=>{
+    //     const { email } = req.user
+    //     const tickets = await ticketMongo.getTick(cart[0].email)
+    //     res.status(200).json(tickets)
+    // }
+     
     static ticketPost = async(req,res)=>{
-        const cart = await carrito.getAll()
-        console.log(cart[0])
+        
+        
+     
         const codigo = (Math.random() * Math.random() + Math.random()).toString()
         const code = codigo.slice(2 , 8)
         const purcharse_datatime = new Date()
@@ -20,6 +29,8 @@ class TicketController {
             purchaser
         }
         ticketMongo.create(ticket)
+        
+         carrito.deleteCart(cart[0]._id)
         res.status(200).json('Ticket generado con exito')
     }
 }

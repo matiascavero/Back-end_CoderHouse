@@ -24,6 +24,10 @@ class CartsManagerMONGO {
             return await this.createCart(cart);
         }
     }
+    async deleteCart(id){
+       await cartsModelo.deleteOne({_id:id})
+       console.log('borrado')
+    }
 }
 
 export default CartsManagerMONGO;
