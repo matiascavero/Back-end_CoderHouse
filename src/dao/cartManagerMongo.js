@@ -26,7 +26,7 @@ class CartsManagerMONGO {
     }
     async deleteCart(id){
        await cartsModelo.deleteOne({_id:id})
-       console.log('borrado')
+      
     }
 }
 

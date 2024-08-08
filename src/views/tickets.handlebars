@@ -1,0 +1,11 @@
+<a href="/" style="color: white;">Pagina principal</a>
+{{#each tickets}}
+<h1>Codigo de ticket: {{code}}</h1>
+
+<h3>Total: ${{amount}}</h3>
+
+<p> <b>Fecha de compra:</b> {{purcharse_datatime}}</p>
+<hr>
+{{/each}}
+
+<h1 style="color: white;">{{mensaje}}</h1>

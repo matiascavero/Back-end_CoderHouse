@@ -23,6 +23,7 @@ routerVistas.get('/perfil', auth, ViewsController.getPerfil)
 
 routerVistas.get('/carrito',isUser, ViewsController.getCarrito)
 
+routerVistas.get('/tickets',isUser, ViewsController.getTickets )
 
 
 export default routerVistas

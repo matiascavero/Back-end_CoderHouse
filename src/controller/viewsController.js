@@ -61,14 +61,26 @@ class ViewsController {
     //carrito
     static getCarrito = async (req,res) =>{
      const carritos = await carrito.getAll()
-    
-     res.status(200).render('carrito', {carritos})
+     const mensaje = 'No hay productos en tu carrito.'
+     if(carritos.length > 0 ){
+      res.status(200).render('carrito', {carritos})
+     }
+     else{
+      res.status(200).render('carrito', {mensaje})
+     }
     }
 
     static getTickets = async (req,res)=>{
       const { email } = req.user
-      const tickets = await ticketsMongo.getTick({purcharser: email})
-      res.status(200).render('ticket', {tickets})
+      const tickets = await ticketsMongo.getTick({purchaser: email})
+      const mensaje = 'No hay tickets generados.'
+      if(tickets.length > 0){
+        res.status(200).render('tickets', {tickets})
+      }
+      else{
+        res.status(200).render('tickets', {mensaje});
+      }
+    
     }
 }
 
