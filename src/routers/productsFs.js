@@ -5,7 +5,6 @@ const routeProducts = express.Router();
 
 const prod = new ProductManagerMEMORY();
 
-//GET
 routeProducts.get('/', async (req, res) => {
     const { limit } = req.query;
     const producto = await prod.getProducts(limit)
@@ -20,9 +19,7 @@ routeProducts.get('/:pid', async (req, res) => {
     const producto = await prod.getProductsId(Number(pid))
     res.json(producto)
 })
-//END GET
 
-//POST
 routeProducts.post('/', async (req, res) => {
     const producto = req.body;
     if (!producto.title, !producto.description, !producto.price, !producto.code, !producto.stock, !producto.category) {
@@ -31,7 +28,7 @@ routeProducts.post('/', async (req, res) => {
     prod.addProduct(producto.title, producto.description, producto.price, producto.code, producto.stock, producto.category)
     res.status(200).send(`Producto agregado con exito`)
 })
-//PUT
+
 routeProducts.put('/:pid', (req, res) => {
     const { pid } = req.params;
     const producto = req.body;
@@ -43,7 +40,7 @@ routeProducts.put('/:pid', (req, res) => {
     return res.send(`El producto con el id ${id} se modifico correctamente`)
 
 })
-//DELETE
+
 routeProducts.delete('/:pid', async (req, res) => {
     const { pid } = req.params;
     const id = Number(pid)

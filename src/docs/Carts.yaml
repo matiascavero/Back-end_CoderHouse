@@ -1,0 +1,87 @@
+
+paths:
+  /api/tickets:
+    post:
+      summary: Create a new ticket
+      tags:
+      - Tickets
+      description: Creates a new ticket.
+      operationId: createTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                priority:
+                  type: string
+                  enum: [low, medium, high]
+                status:
+                  type: string
+                  enum: [open, in_progress, closed]
+      responses:
+        '201':
+          description: Ticket successfully created
+        '400':
+          description: Invalid input
+
+  /api/carts:
+    get:
+      summary: Get all carts
+      tags:
+      - Carts
+      description: Returns a list of all carts.
+      operationId: getAllCarts
+      responses:
+        '200':
+          description: A JSON array of carts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          productId:
+                            type: string
+                          quantity:
+                            type: integer
+
+    post:
+      summary: Add a product to a cart
+      tags:
+      - Carts
+      description: Adds a product to a specific cart.
+      operationId: addProductToCart
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: Product successfully added to cart
+        '400':
+          description: Invalid input

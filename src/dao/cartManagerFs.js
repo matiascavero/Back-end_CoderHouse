@@ -3,7 +3,7 @@ import fs from 'fs';
 
 
 class CartsManagerMEMORY {
-    //propiedades
+
     #carts;
     static idProducts = 0;
     #path;

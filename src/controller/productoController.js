@@ -78,10 +78,10 @@ class ProductoController{
 
      static putProd = async(req, res) => {
         const productId = req.params.id;
-        const updateData = req.body; // Suponiendo que los datos a actualizar están en el cuerpo de la solicitud
+        const updateData = req.body; 
      
         try {
-           const updatedProduct = await prod.updateProd(productId, updateData); // Llama a tu función para actualizar el producto
+           const updatedProduct = await prod.updateProd(productId, updateData);
            res.json(updatedProduct);
         } catch (error) {
            console.error(error);

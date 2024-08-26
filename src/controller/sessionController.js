@@ -15,6 +15,18 @@ class SessionController{
         )
         
     }
+    static getUsuarios = async (req, res)=>{
+        try {
+         const usuarios = await usuariosManager.getAll()
+         res.status(200).json({usuarios})
+        } catch (error) {
+         console.error(masage.error)
+         return res.status(500).json({
+            error: 'Error inesperado en el servidor - Intente más tarde, o contacte a su administrador',
+         
+        });
+        }
+     }
     //post registro
     static methodRegistro =async (req,res)=>{
         res.setHeader('Content-Type', 'application/json');

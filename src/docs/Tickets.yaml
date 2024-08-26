@@ -1,0 +1,30 @@
+aths:
+  /api/ticket:
+    post:
+      summary: Create a new ticket
+      tags:
+      - Tickets
+      description: Creates a new ticket.
+      operationId: createTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                priority:
+                  type: string
+                  enum: [low, medium, high]
+                status:
+                  type: string
+                  enum: [open, in_progress, closed]
+      responses:
+        '201':
+          description: Ticket successfully created
+        '400':
+          description: Invalid input

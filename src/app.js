@@ -14,6 +14,9 @@ import methodOverride from 'method-override'
 import passport from 'passport';
 import { initPassport } from './config/passport.config.js';
 import routerTicket from './routers/ticketMongo.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express'
+
 const app = express();
 const PORT = 3000;
 
@@ -23,6 +26,19 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname,"../", '/views'));
 
+const options = {
+    definition:{
+        openapi: "3.0.0",
+        info:{
+            title:"Api",
+            version:"1.0.0",
+            description:"Documentacion ABM API"
+        }
+    },
+    apis: ["./src/docs/*.yaml"]
+}
+const spec = swaggerJSDoc(options)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(spec))
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,15 +54,15 @@ app.use(passport.session())
 const routeApi = express.Router();
 app.use('/api', routeApi);
 app.use('/', routerVistas);
-//localhost:3000/api/#
+//localhost:3000/api/# FS
 routeApi.use('/carrito', routeCarts);
 routeApi.use('/productos', routeProducts);
 routeApi.use('/sessions', routeSesionRouter)
 
-//mongo
-routeApi.use('/mongo/products', routeProductsMongo)
-routeApi.use('/mongo/carts', routecartsMongo);
-routeApi.use('/mongo/ticket', routerTicket)
+//RUTAS MONGO
+routeApi.use('/products', routeProductsMongo)
+routeApi.use('/carts', routecartsMongo);
+routeApi.use('/ticket', routerTicket)
 //localhost:3000/api/mongo/#
 
 

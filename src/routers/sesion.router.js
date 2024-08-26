@@ -7,6 +7,8 @@ const routeSesionRouter = Router()
 
 routeSesionRouter.get("/error", SessionController.methodError)
 
+routeSesionRouter.get('/users', SessionController.getUsuarios)
+
 routeSesionRouter.post('/registro',passport.authenticate("registro", {failureRedirect:"/api/sessions/error"}) ,SessionController.methodRegistro)
 
 routeSesionRouter.post('/login', passport.authenticate('login', { failureRedirect: '/api/sessions/error' }), SessionController.methodLogin);

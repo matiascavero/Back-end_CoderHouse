@@ -1,0 +1,140 @@
+paths:
+  /api/sessions/users:
+    get:
+      summary: Get all users
+      tags:
+      - Users
+      description: Returns a list of all registered users.
+      operationId: getUsers
+      responses:
+        '200':
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
+  /api/sessions/error:
+    get:
+      summary: Error handling
+      tags:
+      - Users
+      description: Handles errors in session operations.
+      operationId: handleError
+      responses:
+        '400':
+          description: Error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /api/sessions/registro:
+    post:
+      summary: User registration
+      tags:
+      - Users
+      description: Registers a new user using passport authentication.
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User successfully registered
+        '400':
+          description: Registration failed, redirecting to /api/sessions/error
+
+  /api/sessions/login:
+    post:
+      summary: User login
+      tags:
+      - Users
+      description: Authenticates a user using passport.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User successfully authenticated
+        '400':
+          description: Authentication failed, redirecting to /api/sessions/error
+
+  /api/sessions/delete:
+    post:
+      summary: Delete user session
+      tags:
+      - Users
+      description: Deletes a user session using passport.
+      operationId: deleteUserSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        '200':
+          description: User session successfully deleted
+        '400':
+          description: Deletion failed, redirecting to /api/sessions/error
+
+  /api/sessions/logout:
+    get:
+      summary: User logout
+      tags:
+      - Users
+      description: Logs out the current user.
+      operationId: logoutUser
+      responses:
+        '200':
+          description: User successfully logged out
+
+  /api/sessions/github:
+    get:
+      summary: GitHub authentication
+      tags:
+      - Users
+      description: Redirects the user to GitHub for authentication.
+      operationId: authenticateWithGithub
+      responses:
+        '302':
+          description: Redirect to GitHub for authentication
+
+  /api/sessions/callbackGithub:
+    get:
+      summary: GitHub authentication callback
+      tags:
+      - Users
+      description: Handles the GitHub authentication callback and redirects based on success or failure.
+      operationId: handleGithubCallback
+      responses:
+        '200':
+          description: Authentication successful
+        '400':
+          description: Authentication failed, redirecting to /api/sessions/error
