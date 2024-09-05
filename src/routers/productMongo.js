@@ -4,8 +4,6 @@ import ProductoController from "../controller/productoController.js";
 const routeProductsMongo = express.Router();
 
 
-
-
 routeProductsMongo.get('/', ProductoController.getAll)
 
 routeProductsMongo.get('/mockingproducts', ProductoController.faker)

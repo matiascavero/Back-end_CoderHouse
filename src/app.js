@@ -63,7 +63,7 @@ routeApi.use('/sessions', routeSesionRouter)
 routeApi.use('/products', routeProductsMongo)
 routeApi.use('/carts', routecartsMongo);
 routeApi.use('/ticket', routerTicket)
-//localhost:3000/api/mongo/#
+
 
 
 

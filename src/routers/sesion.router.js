@@ -4,7 +4,6 @@ import SessionController from "../controller/sessionController.js";
 const routeSesionRouter = Router()
 
 
-
 routeSesionRouter.get("/error", SessionController.methodError)
 
 routeSesionRouter.get('/users', SessionController.getUsuarios)
