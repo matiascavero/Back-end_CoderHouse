@@ -1,5 +1,5 @@
 import UsuariosManagerMongo from "../dao/usuariosManagerMongo.js";
-
+import { cartsModelo } from "../dao/models/cartsModelo.js";
 const usuariosManager = new UsuariosManagerMongo()
 
 
@@ -28,10 +28,26 @@ class SessionController{
         }
      }
     //post registro
-    static methodRegistro =async (req,res)=>{
-        res.setHeader('Content-Type', 'application/json');
-        return res.status(201).json({mensaje:"Registro OK", nuevoUsuario: req.user})
-   }
+    static methodRegistro = async (req, res) => {
+        try {
+            
+            const nuevoUsuario = req.user;
+
+           
+            const nuevoCarrito = new cartsModelo({
+                email: nuevoUsuario.email, 
+                products: [], 
+                total: 0
+            });
+
+            await nuevoCarrito.save();
+
+            res.status(201).json({ mensaje: "Registro OK", nuevoUsuario });
+        } catch (error) {
+           
+            res.status(500).json({ error: "Error inesperado en el servidor" });
+        }
+    }
     //post login
     static methodLogin = async (req, res) => {
         let { web } = req.body

@@ -13,33 +13,67 @@ class CartController {
         }
     }
   
-    static metPost= async(req, res) =>{
-        const { productId } = req.params;
-        const {email} = req.user
-        
+    static metPost = async (req, res) => {
+        const { cid, pid } = req.params; // cid: email del usuario, pid: ID del producto
         try {
-            const prod = await producto.getById(productId);
-            let carts = await cartsManager.getAll();
-            let cart = carts[0];
-  
+            // Buscar el producto por ID
+            const producto = await productModelo.findById(pid);
+            if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+
+            // Buscar el carrito por email (o identificador del usuario)
+            let cart = await cartsModelo.findOne({ email: cid });
             if (!cart) {
-              cart = { products: [], email };
-            } else if (!Array.isArray(cart.products)) {
-              cart.products = [];
+                // Si el carrito no existe, crearlo
+                cart = new cartsModelo({ email: cid, products: [], total: 0 });
             }
-  
-            const productIndex = cart.products.findIndex(p => p.id.equals(productId));
-            let price = prod.price;
-  
+
+            // Buscar el producto en el carrito
+            const productIndex = cart.products.findIndex(p => p.id.equals(pid));
             if (productIndex !== -1) {
+                // Si el producto ya está en el carrito, aumentar la cantidad
                 cart.products[productIndex].quantity += 1;
-                cart.products[productIndex].price = price;
+                cart.products[productIndex].price = producto.price;
             } else {
-                cart.products.push({ id: productId, quantity: 1, price});
+                // Si el producto no está en el carrito, añadirlo
+                cart.products.push({ id: pid, quantity: 1, price: producto.price });
             }
-  
-            await cartsManager.createOrUpdateCart(cart);
-            res.redirect('/productos');
+
+            // Recalcular el total del carrito
+            cart.total = cart.products.reduce((total, p) => total + (p.price * p.quantity), 0);
+
+            // Guardar el carrito actualizado en la base de datos
+            await cart.save();
+            res.status(200).json({ mensaje: 'Producto añadido al carrito', cart });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    static getCartById = async (req, res) => {
+        const { cid } = req.params; 
+        try {
+           
+            const cart = await cartsModelo.findOne({ email: cid });
+            if (!cart) return res.status(404).json({ error: 'Carrito no encontrado' });
+
+            res.status(200).json(cart);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    static purchaseCart = async (req, res) => {
+        const { cid } = req.params; 
+        try {
+          
+            const cart = await cartsModelo.findOne({ email: cid });
+            if (!cart) return res.status(404).json({ error: 'Carrito no encontrado' });
+
+           
+
+            cart.products = [];
+            cart.total = 0;
+            await cart.save();
+
+            res.status(200).json({ mensaje: 'Compra realizada con éxito', cart });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

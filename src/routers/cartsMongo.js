@@ -6,6 +6,10 @@ const routecartsMongo = express.Router();
 
 routecartsMongo.get('/', CartController.getAll)
 
-routecartsMongo.post('/:productId', CartController.metPost)
+routecartsMongo.post('/:cid/product/:pid', CartController.metPost)
+
+routecartsMongo.get('/:cid', CartController.getCartById);
+
+routecartsMongo.post('/:cid/purchase', CartController.purchaseCart);
 
 export default routecartsMongo;
