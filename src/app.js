@@ -16,10 +16,14 @@ import { initPassport } from './config/passport.config.js';
 import routerTicket from './routers/ticketMongo.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express'
-
+import { config } from 'dotenv';
 const app = express();
-const PORT = 3000;
 
+
+config()
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
+const DB_NAME = process.env.DB_NAME;
 app.use(methodOverride('_method'));
 
 app.engine('handlebars', engine())
@@ -75,12 +79,7 @@ const connDB=async()=>{
     try {
      
      
-        await mongoose.connect(
-            "mongodb+srv://backendcoder:codercoder@cluster0.67nagvo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-            {
-                dbName:"ecommerce"
-            }
-        )
+        await mongoose.connect(`${MONGO_URL}/${DB_NAME}`)
         console.log("DB Online...!!!")
 
     } catch (error) {
